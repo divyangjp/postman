@@ -13,12 +13,14 @@ SOURCEDIR=.
 SOURCE=\
 	$(SOURCEDIR)/testmain.cpp\
 	$(SOURCEDIR)/Utils.cpp\
-	$(SOURCEDIR)/Common.cpp
+	$(SOURCEDIR)/Common.cpp\
+	$(SOURCEDIR)/CurlWrap.cpp
 
 OBJECTS=\
 	testmain.o\
 	Utils.o\
-	Common.o
+	Common.o\
+	CurlWrap.o
 
 MYPROGRAM=postman.out
 MYINCLUDES=\
