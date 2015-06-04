@@ -19,7 +19,7 @@ struct WordTrack
     bool operator()(const char* cstr) const
     {
         //Ignore case because APPLE/apple is the same Apple... :P
-        return !(boost::iequals(cstr, m_sWord.c_str()));
+        return (boost::iequals(cstr, m_sWord.c_str()));
     }
 };
 
