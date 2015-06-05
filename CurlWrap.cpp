@@ -8,7 +8,7 @@
 #include <iostream>
 #include "CurlWrap.h"
 
-CurlWrap::CurlWrap()
+CurlWrap::CurlWrap():m_reset(false)
 {
     m_pcurl = curl_easy_init();
 }
@@ -16,6 +16,12 @@ CurlWrap::CurlWrap()
 int CurlWrap::FetchPage(std::string& url, 
                         std::string& readbuff)
 {
+    if(m_reset)
+    {
+        //reset used curl handle
+        curl_easy_reset(m_pcurl);
+    }
+    m_reset = true;
     readbuff.clear();
     curl_easy_setopt(m_pcurl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(m_pcurl, CURLOPT_WRITEFUNCTION, WriteCallback);

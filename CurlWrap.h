@@ -18,9 +18,6 @@ class CurlWrap
         CurlWrap();
         ~CurlWrap(){ curl_easy_cleanup(m_pcurl); }
 
-        //If using same curl wrapper object to fetch different page,
-        //reset first
-        inline void Reset(){ curl_easy_reset(m_pcurl); }
         int FetchPage(std::string& url, std::string& readbuff);
 
     private:
@@ -33,6 +30,7 @@ class CurlWrap
     private:
         CURL*       m_pcurl;
         CURLcode    m_result;
+        bool        m_reset;
 
 
     private:
