@@ -21,8 +21,33 @@ struct WordTrack
         //Ignore case because APPLE/apple is the same Apple... :P
         return (boost::iequals(cstr, m_sWord.c_str()));
     }
+
+    bool operator <(const WordTrack& wt)
+    {
+        //This is ok as case is not imp. 
+        //we are more concerned about unique words in a page
+        //so while inserting words in set, they are already lower cased
+        //Good IDEA!!! not sure...
+        return (m_sWord < wt.m_sWord);
+    }
 };
 
+struct LinkTrack
+{
+    std::string     m_sLink;
+    unsigned int    m_Level;
 
+    bool operator()(const char* cstr) const
+    {
+        return (boost::iequals(cstr, m_sLink.c_str()));
+    }
+
+    bool operator <(const LinkTrack& lt)
+    {
+        //This is okay as links are lower cased before inserting
+        //into vector... snap!
+        return (m_sLink < lt.m_sLink);
+    }
+};
 
 #endif //_COMMON_H_
