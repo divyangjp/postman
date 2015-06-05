@@ -14,15 +14,22 @@
 struct WordTrack
 {
     std::string     m_sWord;
-    double          m_dCount;
+    mutable double  m_count;    //mutable bcoz WordTrack objects are in std::set
+                                //which stores objects as const. But then again
+                                //this is because we want efficient data struct
+                                //and std::set fits the bill
     
+    WordTrack(const std::string& word, double count)
+        :m_sWord(word), m_count(count)
+    {
+    }
     bool operator()(const char* cstr) const
     {
         //Ignore case because APPLE/apple is the same Apple... :P
         return (boost::iequals(cstr, m_sWord.c_str()));
     }
 
-    bool operator <(const WordTrack& wt)
+    bool operator <(const WordTrack& wt) const
     {
         //This is ok as case is not imp. 
         //we are more concerned about unique words in a page
@@ -36,6 +43,12 @@ struct LinkTrack
 {
     std::string     m_sLink;
     unsigned int    m_Level;
+
+
+    LinkTrack(const std::string& url, unsigned int level)
+        :m_sLink(url), m_Level(level)
+    {
+    }
 
     bool operator()(const char* cstr) const
     {
