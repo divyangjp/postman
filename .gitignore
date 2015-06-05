@@ -25,4 +25,6 @@
 *.out
 *.app
 
+# swap editor files
+*.swp
 ## Project specific ignore rules ##

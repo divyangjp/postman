@@ -15,12 +15,25 @@
 class CurlWrap
 {
     public:
-        CurlWrap(std::string url, std::string& readBuffer);
+        CurlWrap();
         ~CurlWrap(){ curl_easy_cleanup(m_pcurl); }
+
+        //If using same curl wrapper object to fetch different page,
+        //reset first
+        inline void Reset(){ curl_easy_reset(m_pcurl); }
+        int FetchPage(std::string& url, std::string& readbuff);
+
+    private:
+        static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+        {
+            ((std::string*)userp)->append((char*)contents, size * nmemb);
+            return size * nmemb;
+        }
 
     private:
         CURL*       m_pcurl;
         CURLcode    m_result;
+
 
     private:
         //not sure whether copy ctor and = allowed, so
